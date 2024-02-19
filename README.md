@@ -34,17 +34,11 @@ docker-compose down
 
 ## Usage
 
-Run the application with a sentence as a command line argument:
-
-```bash
-docker-compose run python-server python3 index.py "私はこの映画が大好きなので、何度でも見ます！"
-```
-
-or
+Run the application with a sentence as command line arguments:
 
 ```bash
 docker exec -it python-server bash
-python3 index.py "私はこの映画が大好きなので、何度でも見ます！"
+python3 index.py "model_name" "sentence"
 ```
 
 ## Pytorch vs. Tensorflow vs. Default
