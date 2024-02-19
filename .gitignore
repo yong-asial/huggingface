@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.venv
+env.bak/
+venv.bak/
+*.bak
+*.log
+
+# Docker
+.DS_Store
+.Docker/.env
+.Docker/.env.*
+.Docker/db_data/
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Model
+apps/model
+
+# Other
+*.swp
+*~
+.project
+*.py,cover
+.coverage
+dist/
+build/
+sdist/
+*.egg-info/
+.installed.cfg
+MANIFEST
+
+# Directories to ignore
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore all log files
+*.log

@@ -1,0 +1,16 @@
+version: '2.4'
+
+services:
+  python-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    hostname: python-server
+    container_name: python-server
+    command: bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./apps:/apps
+
