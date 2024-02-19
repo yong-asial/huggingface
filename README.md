@@ -38,12 +38,12 @@ Run the application with a sentence as command line arguments:
 
 ```bash
 docker exec -it python-server bash
-python3 index.py "model_name" "sentence"
+python3 index.py "task_name" "model_name" "sentence"
 ```
 
 ## Pytorch vs. Tensorflow vs. Default
 
-For a model (for example, nlptown/bert-base-multilingual-uncased-sentiment), there are many model binaries, pytorch, tensorflow, fax, etc. We can choose to use which model binary by using specific Tokenizer and Model class.
+For a model (for example, nlptown/bert-base-multilingual-uncased-sentiment), there are many model binaries, pytorch, tensorflow, jax, etc. We can choose to use which model binary by using specific Tokenizer and Model class.
 
 ### Pytorch
 
@@ -115,6 +115,15 @@ classifier.tokenizer.save_pretrained(save_directory)
 # Load the pipeline with the saved model
 classifier = pipeline("sentiment-analysis", model=save_directory)
 classifier("I like huggingFace.")
+```
+
+## Installed Packages
+
+These are required for translation model.
+
+```txt
+sentencepiece
+sacremoses
 ```
 
 ## Resources
