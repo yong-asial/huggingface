@@ -126,6 +126,38 @@ sentencepiece
 sacremoses
 ```
 
+## Use it with Javascript
+
+If the model has onnx (model.onnx) then we can use transformer.js to load and infer the model.
+
+```javascript
+import { pipeline } from '@xenova/transformers';
+const pipe = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english');
+const out = await pipe('I love transformers!');
+```
+
+Otherwise, if the model doesn't have onnx, we first need to convert it to onnx using onnx-converter
+
+```bash
+cd onnx-converter
+docker-compose build
+docker-compose up -d
+docker exec -it python-server bash
+python convert.py --quantize --model_id google-bert/bert-base-uncased
+```
+
+Then you can copy the onnx model to somewhere and load it
+
+```javascript
+import { pipeline, env } from '@xenova/transformers';
+
+env.localModelPath = './models/';
+env.allowRemoteModels = false;
+const pipe = await pipeline('fill-mask', 'google-bert/bert-base-uncased');
+const out = await pipe("Hello I'm a [MASK] model.");
+```
+
 ## Resources
 
 - [Google Colab](https://colab.research.google.com/drive/1sWXmi8xaBUw6-ZYi3y76ODw50jM1jxJb)
+- [Transformer.js](https://huggingface.co/docs/transformers.js/index)
