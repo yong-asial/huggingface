@@ -49,3 +49,9 @@ __pycache__/
 
 # Ignore all log files
 *.log
+
+# javascript
+
+node_modules/
+transformers.js/
+models/
