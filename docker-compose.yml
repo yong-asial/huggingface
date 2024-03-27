@@ -2,15 +2,20 @@ version: '2.4'
 
 services:
   python-server:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: nvidia/cuda:12.2.2-devel-ubuntu20.04
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     env_file: .env
     hostname: python-server
     container_name: python-server
     command: bash
     stdin_open: true
     tty: true
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     volumes:
       - ./apps:/apps
 

@@ -1,0 +1,27 @@
+version: "3.0"
+
+services:
+  python-server:
+    hostname: python-server
+    container_name: python-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities:
+                - gpu
+                - utility # nvidia-smi
+                - compute # CUDA. Required to avoid "CUDA version: N/A"
+                - video # NVENC. For instance to use a hardware accelerated ffmpeg. Skip it if you don't need it
+    restart: always
+    tty: true
+    command: bash
+    stdin_open: true
+    volumes:
+      - ./apps:/apps
+    env_file: .env
+
