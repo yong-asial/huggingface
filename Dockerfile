@@ -1,5 +1,5 @@
 # Use the official CUDA base image from the Docker Hub
-FROM nvidia/cuda:11.8.0-devel-ubuntu20.04
+FROM nvidia/cuda:12.2.2-devel-ubuntu20.04
 
 # Set DEBIAN_FRONTEND to noninteractive to prevent tzdata configuration prompts
 ENV DEBIAN_FRONTEND=noninteractive

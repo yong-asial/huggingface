@@ -4,3 +4,4 @@ sentencepiece
 sacremoses
 Pillow
 einops
+accelerate

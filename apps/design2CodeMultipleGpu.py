@@ -1,6 +1,7 @@
 # pip install flash_attn
 
 import torch
+import torch.nn as nn
 import time
 
 from PIL import Image
@@ -16,14 +17,18 @@ PROCESSOR = AutoProcessor.from_pretrained(
     "HuggingFaceM4/VLM_WebSight_finetuned",
     token=API_TOKEN,
 )
+
+# Wrap your model with DataParallel
 MODEL = AutoModelForCausalLM.from_pretrained(
     "HuggingFaceM4/VLM_WebSight_finetuned",
     token=API_TOKEN,
     trust_remote_code=True,
     torch_dtype=torch.bfloat16,
-).to(DEVICE)
+)
+MODEL = nn.DataParallel(MODEL)  # Wrap with DataParallel
+MODEL = MODEL.to(DEVICE)
 
-image_seq_len = MODEL.config.perceiver_config.resampler_n_latents
+image_seq_len = MODEL.module.config.perceiver_config.resampler_n_latents  # Adjust to access the underlying model's config
 BOS_TOKEN = PROCESSOR.tokenizer.bos_token
 BAD_WORDS_IDS = PROCESSOR.tokenizer(["<image>", "<fake_token_around_image>"], add_special_tokens=False).input_ids
 
@@ -64,14 +69,14 @@ def image_to_code(image):
 
     inputs["pixel_values"] = PROCESSOR.image_processor([image], transform=custom_transform)
     inputs = {k: v.to(DEVICE) for k, v in inputs.items()}
-    generated_ids = MODEL.generate(**inputs, bad_words_ids=BAD_WORDS_IDS, max_length=4096)
+    generated_ids = MODEL.module.generate(**inputs, bad_words_ids=BAD_WORDS_IDS, max_length=4096)  # Access the underlying module for generate
     generated_text = PROCESSOR.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
     print(generated_text)
 
 def main():
     start_time = time.time()
-    image = Image.open("/apps/images/dropdown.png")
+    image = Image.open("/apps/images/login_form1.png")
 
     image_to_code(image)
 
