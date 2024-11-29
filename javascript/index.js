@@ -17,7 +17,10 @@ let out;
 // out = await pipe("Hello I'm a [MASK] model.");
 
 // python convert.py --quantize --model_id nlptown/bert-base-multilingual-uncased-sentiment
-pipe = await pipeline('sentiment-analysis', 'nlptown/bert-base-multilingual-uncased-sentiment');
+const modelName = 'nlptown/bert-base-multilingual-uncased-sentiment';
+const task_name = 'sentiment-analysis';
+
+pipe = await pipeline(task_name, modelName);
 out = await pipe('I love transformers!');
 
 console.log(out);
